@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="#fff"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="#fff"
+        android:focusableInTouchMode="true"
+        android:layout_height="match_parent">
+
+
+
+
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/peripatoslogo" />
+
+    <com.blueobject.peripatosapp.helper.CanaroTextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/image"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        android:text="@string/app_name"
+        android:textColor="#545454"
+        android:textSize="@dimen/guillotine_item_text_size" />
+
+    <com.blueobject.peripatosapp.helper.CanaroTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/learnbymoving"
+        android:textColor="#545454"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/username"
+        android:hint="Username"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/pass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:hint="@string/password" />
+
+    <Button
+        android:id="@+id/send"
+        android:text="Login"
+        android:textColor="#fff"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        ></Button>
+
+    <com.blueobject.peripatosapp.helper.CanaroTextView
+        android:id="@+id/gosignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/createnewaccount"
+        android:textColor="#545454"
+        android:textSize="14sp" />
+
+
+</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

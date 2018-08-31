@@ -1,0 +1,141 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+
+    <style name="ToolBarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="actionMenuTextColor">#FFFFFFFF</item>
+    </style>
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Toolbar.SubTitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="LinearLayout"></style>
+
+    <style name="LinearLayout.GuillotineItem">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_marginTop">@dimen/guillotine_small_margin</item>
+    </style>
+
+    <style name="TextView" />
+
+    <style name="TextView.ToolbarTitle">
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="TextView.GuillotineItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/guillotine_small_margin</item>
+        <item name="android:textSize">@dimen/guillotine_item_text_size</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="TextView.GuillotineItem.Selected">
+        <item name="android:textColor">@color/selected_item_color</item>
+    </style>
+
+    <style name="Toolbar">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@color/guillotine_background</item>
+    </style>
+
+    <style name="ImageView" />
+
+    <style name="ImageView.ContentItem">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="ImageView.Hamburger" parent="Widget.AppCompat.ActionButton">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/abc_action_bar_overflow_padding_start_material</item>
+    </style>
+
+    <style name="ImageView.GuillotineItem">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/guillotine_large_margin</item>
+    </style>
+    
+    <!-- MaterialSearchBarLightTheme-->
+    <style name="MaterialSearchBarLight" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="mt_searchBarColor">@color/searchBarPrimaryColor</item>
+        <item name="mt_dividerColor">@color/searchBarDividerColor</item>
+        <item name="mt_navIconTint">@color/searchBarNavIconTintColor</item>
+        <item name="mt_searchIconTint">@color/searchBarSearchIconTintColor</item>
+        <item name="mt_clearIconTint">@color/searchBarClearIconTintColor</item>
+        <item name="mt_menuIconTint">@color/searchBarMenuIconTintColor</item>
+        <item name="mt_backIconTint">@color/searchBarBackIconTintColor</item>
+        <item name="mt_textCursorTint">@color/searchBarCursorColor</item>
+        <item name="mt_textColor">@color/searchBarTextColor</item>
+        <item name="mt_hintColor">@color/searchBarHintColor</item>
+        <item name="mt_placeholderColor">@color/searchBarPlaceholderColor</item>
+        <item name="mt_highlightedTextColor">@color/searchBarTextHighlightColor</item>
+        <item name="mt_leftTextSelectorTint">@color/leftTextSelectorColor</item>
+        <item name="mt_middleTextSelectorTint">@color/middleTextSelectorColor</item>
+        <item name="mt_rightTextSelectorTint">@color/rightTextSelectorColor</item>
+        <item name="mt_leftTextSelectorDrawable">@drawable/text_select_handle_left_mtrl_alpha_mtrlsearch</item>
+        <item name="mt_middleTextSelectorDrawable">@drawable/text_select_handle_middle_mtrl_alpha_mtrlsearch</item>
+        <item name="mt_rightTextSelectorDrawable">@drawable/text_select_handle_right_mtrl_alpha_mtrlsearch</item>
+        <item name="mt_handlesTintEnabled">true</item>
+    </style>
+
+    <!-- MaterialSearchBarDarkTheme-->
+    <style name="MaterialSearchBarDark" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="mt_searchBarColor">@color/searchBarPrimaryColorDark</item>
+        <item name="mt_dividerColor">@color/searchBarDividerColorDark</item>
+        <item name="mt_navIconTint">@color/searchBarNavIconTintColorDark</item>
+        <item name="mt_searchIconTint">@color/searchBarSearchIconTintColorDark</item>
+        <item name="mt_clearIconTint">@color/searchBarClearIconTintColorDark</item>
+        <item name="mt_menuIconTint">@color/searchBarMenuIconTintColorDark</item>
+        <item name="mt_backIconTint">@color/searchBarBackIconTintColorDark</item>
+        <item name="mt_textCursorTint">@color/searchBarCursorColorDark</item>
+        <item name="mt_textColor">@color/searchBarTextColorDark</item>
+        <item name="mt_hintColor">@color/searchBarHintColorDark</item>
+        <item name="mt_placeholderColor">@color/searchBarPlaceholderColorDark</item>
+        <item name="mt_highlightedTextColor">@color/searchBarTextHighlightColorDark</item>
+        <item name="mt_leftTextSelectorTint">@color/leftTextSelectorColorDark</item>
+        <item name="mt_middleTextSelectorTint">@color/middleTextSelectorColorDark</item>
+        <item name="mt_rightTextSelectorTint">@color/rightTextSelectorColorDark</item>
+        <item name="mt_leftTextSelectorDrawable">@drawable/text_select_handle_left_mtrlsearch</item>
+        <item name="mt_middleTextSelectorDrawable">@drawable/text_select_handle_middle_mtrlsearch</item>
+        <item name="mt_rightTextSelectorDrawable">@drawable/text_select_handle_right_mtrlsearch</item>
+        <item name="mt_handlesTintEnabled">false</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
+</resources>

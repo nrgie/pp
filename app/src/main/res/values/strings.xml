@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Peripatos</string>
+    <string name="title_route_detail">route Detail</string>
+    <string name="location_permission_denied">Megtagadva</string>
+    <string name="permission_required_toast">Engedély kell</string>
+    <string name="permission_rationale_location">GPS engedély</string>
+
+    <string name="profile">VALAMI</string>
+    <string name="feed">VALAMI</string>
+    <string name="activity">VALAMI</string>
+    <string name="settings">VALAMI</string>
+
+    <string name="facebook_app_id">170520093583888</string>
+    <string name="fb_login_protocol_scheme">fb170520093583888</string>
+    <string name="trip">Tour Details</string>
+    <string name="learnbymoving">learning by moving</string>
+    <string name="createnewaccount">Create New Account</string>
+    <string name="password">Password</string>
+    <string name="logout">LOGOUT</string>
+    <string name="backtosignin">Back to signin</string>
+    <string name="retype">Password again</string>
+    <string name="admin">ADMIN</string>
+    
+    <string name="action_search">Search</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="action_placeholder">Your App Name</string>
+
+
+    //Back Arrow Path Data
+    <string name="back_vector_path" translatable="false">M50 25,L80 50,M20 50,L80 50,M50 75,L80 50</string>
+    //Menu Path Data
+    <string name="menu_vector_path" translatable="false">M20 30,L80 30,M20 50,L80 50,M20 70,L80 70</string>
+    <string name="home">Home</string>
+    <string name="showtours">Show Tours</string>
+    
+    <string name="button.finish">FINISH</string>
+    <string name="button.next">NEXT</string>
+    <string name="button.skip">SKIP</string>
+
+</resources>

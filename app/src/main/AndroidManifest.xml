@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.blueobject.peripatosapp">
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    
+    
+    <application
+        android:icon="@drawable/peripatoslogo"
+        android:label="@string/app_name"
+        android:allowBackup="true"
+        android:largeHeap="true"
+        android:roundIcon="@drawable/peripatoslogo"
+        android:supportsRtl="true"
+        android:name="com.blueobject.peripatosapp.App"
+        tools:replace="android:theme, android:label"
+        tools:overrideLibrary="com.google.android.gms.all"
+        android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="f2d93c631b5e6a9ecccce35f83d97332a26ef433"
+            />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBR9leaaHg-w_txPIluBL1aUO__0Tzl6_o" />
+        
+        <activity
+            android:name="com.blueobject.peripatosapp.GuideActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
+        <activity
+            android:name="com.blueobject.peripatosapp.SplashActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name="com.blueobject.peripatosapp.MainActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name="com.blueobject.peripatosapp.SignActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name="com.blueobject.peripatosapp.OnBoardActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name="com.blueobject.peripatosapp.AdminActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name="com.blueobject.peripatosapp.RouteListActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name="com.blueobject.peripatosapp.RouteDetailActivity"
+            android:label="@string/title_route_detail"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            android:parentActivityName="com.blueobject.peripatosapp.RouteListActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.blueobject.peripatosapp.RouteListActivity" />
+        </activity>
+
+        <service
+            android:name="com.blueobject.peripatosapp.service.RouteService"
+            android:enabled="true"
+            android:exported="false">
+        </service>
+
+        <service
+            android:name="com.blueobject.peripatosapp.service.BackgroundMusicPlayer"
+            android:enabled="true"
+            android:exported="false">
+        </service>
+
+        <service
+            android:name="com.blueobject.peripatosapp.service.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="com.blueobject.peripatosapp.service.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+
+    </application>
+
+</manifest>

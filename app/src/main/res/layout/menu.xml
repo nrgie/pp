@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="0dp"
+    android:fitsSystemWindows="true"
+    android:background="@color/guillotine_background"
+    android:orientation="vertical">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="0dp"
+    android:fitsSystemWindows="true"
+    android:background="@color/guillotine_background"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:elevation="10dp"
+        android:layout_height="?attr/actionBarSize"
+        app:popupTheme="@style/AppTheme.PopupOverlay" >
+
+        <ImageView
+            android:id="@+id/content_hamburger"
+            style="@style/ImageView.Hamburger"
+            android:src="@drawable/ic_menu" />
+
+        <com.blueobject.peripatosapp.helper.CanaroTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/app_name"
+            android:textColor="#fff"
+            android:textSize="@dimen/guillotine_item_text_size" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ddd"
+        />
+
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/profile_group"
+        style="@style/LinearLayout.GuillotineItem"
+        android:layout_marginTop="@dimen/guillotine_medium_margin">
+
+        <ImageView
+            style="@style/ImageView.GuillotineItem"
+            android:src="@drawable/ic_profile" />
+
+        <com.blueobject.peripatosapp.helper.CanaroTextView
+            android:id="@+id/home"
+            style="@style/TextView.GuillotineItem"
+            android:text="@string/home" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/feed_group"
+        style="@style/LinearLayout.GuillotineItem">
+
+        <ImageView
+            style="@style/ImageView.GuillotineItem"
+            android:src="@drawable/ic_feed" />
+
+        <com.blueobject.peripatosapp.helper.CanaroTextView
+            style="@style/TextView.GuillotineItem"
+            android:text="@string/showtours" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/admin_group"
+        style="@style/LinearLayout.GuillotineItem">
+
+        <ImageView
+            style="@style/ImageView.GuillotineItem"
+            android:src="@drawable/ic_activity_active" />
+
+        <com.blueobject.peripatosapp.helper.CanaroTextView
+            android:id="@+id/admin"
+            style="@style/TextView.GuillotineItem.Selected"
+            android:text="@string/admin" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/guillotine_divider_height" />
+
+    <LinearLayout
+        android:id="@+id/settings_group"
+        android:visibility="gone"
+        style="@style/LinearLayout.GuillotineItem">
+
+        <ImageView
+            style="@style/ImageView.GuillotineItem"
+            android:src="@drawable/ic_profile" />
+
+        <com.blueobject.peripatosapp.helper.CanaroTextView
+            android:id="@+id/logout"
+            style="@style/TextView.GuillotineItem"
+            android:text="@string/logout" />
+    </LinearLayout>
+
+</LinearLayout>
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="150dp"
+        android:layout_marginTop="30dp" />
+
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--api keys-->
+    <!--You can use the same API key for your Google Maps Android API v2 apps and your Google Places API for Android apps.-->
+    <!--source: -->
+    <!--https://developers.google.com/places/android-api/start#android-sdk-->
+    <string name="android_key">AIzaSyA6GvzeTAkqMdRAoxoXgHcFZiVqEY7ApgI</string>
+    <!--end api keys-->
+</resources>
