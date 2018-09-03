@@ -227,9 +227,10 @@ public class GuideActivity extends LocalizationActivity implements
         mMap.getUiSettings().setCompassEnabled(false);
         mMap.setBuildingsEnabled(true);
 
-        if(tour.radius <= 30) {
-            mMap.setMapType(com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID);
-        }
+        //if(tour.radius <= 30) {
+        mMap.setMapType(com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID);
+
+        //}
 
         fetchRoutes();
 
@@ -271,15 +272,6 @@ public class GuideActivity extends LocalizationActivity implements
         navigation = new MapboxNavigation(this, "pk.eyJ1IjoibnJnaWUiLCJhIjoiY2psaWN1enlkMXJscDNrczUzeWh4bzNqciJ9.lR9D6LONve3rboGr3r827Q");
 
         setContentView(R.layout.activity_guide);
-
-
-        navigationView = findViewById(R.id.navigationView);
-        navigationView.onCreate(savedInstanceState);
-        navigationView.initialize(this);
-
-
-
-
 
         // welcome modal!
         // play audio if available.
@@ -333,6 +325,10 @@ public class GuideActivity extends LocalizationActivity implements
             }
         }
 
+
+        navigationView = findViewById(R.id.navigationView);
+        navigationView.onCreate(savedInstanceState);
+        navigationView.initialize(this);
 
 
         ArrayList<routeListItem> mTitles = new ArrayList<routeListItem>(size);
@@ -735,7 +731,6 @@ public class GuideActivity extends LocalizationActivity implements
            text = text.replaceAll(w.word, w.swap);
         }
 
-
         App.TTS.speak(text);
     }
 
@@ -1019,15 +1014,6 @@ public class GuideActivity extends LocalizationActivity implements
         ((RouteListAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
 
         mDrawerList.setItemChecked(position, true);
-
-        if(currentRoute != null) {
-            fetchRoute(Point.fromLngLat(Double.valueOf(currentRoute.latitude), Double.valueOf(currentRoute.longitude)),
-                    Point.fromLngLat(Double.valueOf(markers.get(position).route.latitude), Double.valueOf(markers.get(position).route.longitude)));
-        } else {
-            if(mLastLocation != null)
-                fetchRoute(Point.fromLngLat(mLastLocation.getLatitude(), mLastLocation.getLongitude()),
-                    Point.fromLngLat(Double.valueOf(markers.get(position).route.latitude), Double.valueOf(markers.get(position).route.longitude)));
-        }
 
         currentRoute = markers.get(position).route;
         currentPM = markers.get(position);
@@ -1476,7 +1462,7 @@ public class GuideActivity extends LocalizationActivity implements
                 .navigationListener(this)
                 .progressChangeListener(this)
                 .routeListener(this)
-                .shouldSimulateRoute(true);
+                .shouldSimulateRoute(false);
         return options.build();
     }
 
