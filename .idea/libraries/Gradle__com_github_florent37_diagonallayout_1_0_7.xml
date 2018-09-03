@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.florent37:diagonallayout-1.0.7">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/diagonallayout-1.0.7.aar/da6697ce3c74ebf433779f0f6729b8ef/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/diagonallayout-1.0.7.aar/da6697ce3c74ebf433779f0f6729b8ef/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.florent37/diagonallayout/1.0.7/4e2b1ce48437b4936392a7c70fe9ab457319d857/diagonallayout-1.0.7-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

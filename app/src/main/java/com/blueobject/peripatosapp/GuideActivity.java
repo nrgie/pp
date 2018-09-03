@@ -18,7 +18,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 
-import android.support.v7.util.SortedList;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +41,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 
 import com.akexorcist.localizationactivity.LocalizationActivity;
@@ -83,10 +83,20 @@ import com.google.maps.model.SpeedLimit;
 
 import com.google.gson.reflect.TypeToken;
 import com.mapbox.api.directions.v5.models.DirectionsResponse;
+import com.mapbox.api.directions.v5.models.DirectionsRoute;
 import com.mapbox.geojson.Point;
 import com.mapbox.mapboxsdk.Mapbox;
+import com.mapbox.services.android.navigation.ui.v5.NavigationLauncher;
+import com.mapbox.services.android.navigation.ui.v5.NavigationLauncherOptions;
+import com.mapbox.services.android.navigation.ui.v5.NavigationView;
+import com.mapbox.services.android.navigation.ui.v5.NavigationViewOptions;
+import com.mapbox.services.android.navigation.ui.v5.OnNavigationReadyCallback;
+import com.mapbox.services.android.navigation.ui.v5.listeners.NavigationListener;
+import com.mapbox.services.android.navigation.ui.v5.listeners.RouteListener;
 import com.mapbox.services.android.navigation.v5.navigation.MapboxNavigation;
 import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
+import com.mapbox.services.android.navigation.v5.routeprogress.ProgressChangeListener;
+import com.mapbox.services.android.navigation.v5.routeprogress.RouteProgress;
 import com.ramotion.fluidslider.FluidSlider;
 
 
@@ -114,7 +124,8 @@ public class GuideActivity extends LocalizationActivity implements
         GoogleMap.OnMyLocationButtonClickListener,
         OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback,
-        ILocation {
+        ILocation, OnNavigationReadyCallback,
+        NavigationListener, RouteListener, ProgressChangeListener {
 
     Context context;
     Tours.TourItem tour;
@@ -126,6 +137,9 @@ public class GuideActivity extends LocalizationActivity implements
 
     private GoogleMap mMap;
     public SharedPreferences shared;
+
+    NavigationRoute.Builder builder;
+    MapboxNavigation navigation;
 
     private boolean started = false;
     private android.os.Handler handler = new android.os.Handler();
@@ -169,6 +183,13 @@ public class GuideActivity extends LocalizationActivity implements
 
     GuideActivity act;
 
+    private NavigationView navigationView;
+    private boolean dropoffDialogShown;
+    private Location lastKnownLocation;
+
+    private List<Point> points = new ArrayList<>();
+
+
     @Override
     public void handleLocation(double lat, double lng) {
 
@@ -179,25 +200,6 @@ public class GuideActivity extends LocalizationActivity implements
 
         fillMap();
         fetchRoutes();
-
-        //CameraUpdate loc = CameraUpdateFactory.newLatLngZoom(new LatLng(lat, lng), 16);
-        //if(mMap != null)
-         //   mMap.animateCamera(loc);
-
-        /*
-        LocationCallback locCB = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                Location loc = locationResult.getLastLocation();
-                if(loc.getAccuracy() < 50) {
-                    latitudeValue = loc.getLatitude();
-                    longitudeValue = loc.getLongitude();
-                }
-
-                fillMap();
-                fetchRoutes();
-            }
-        };*/
 
     }
 
@@ -265,11 +267,17 @@ public class GuideActivity extends LocalizationActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Mapbox.getInstance(this, "pk.eyJ1IjoibnJnaWUiLCJhIjoiY2psaWN1enlkMXJscDNrczUzeWh4bzNqciJ9.lR9D6LONve3rboGr3r827Q");
+        navigation = new MapboxNavigation(this, "pk.eyJ1IjoibnJnaWUiLCJhIjoiY2psaWN1enlkMXJscDNrczUzeWh4bzNqciJ9.lR9D6LONve3rboGr3r827Q");
+
         setContentView(R.layout.activity_guide);
 
-        Log.e(TAG, "oncreate");
 
-        MapboxNavigation navigation = new MapboxNavigation(this, "pk.eyJ1IjoibnJnaWUiLCJhIjoiY2psaWN1enlkMXJscDNrczUzeWh4bzNqciJ9.lR9D6LONve3rboGr3r827Q");
+        navigationView = findViewById(R.id.navigationView);
+        navigationView.onCreate(savedInstanceState);
+        navigationView.initialize(this);
+
+
 
 
 
@@ -321,8 +329,11 @@ public class GuideActivity extends LocalizationActivity implements
         for(Tours.RouteItem ri : routes) {
             if(ri.latitude != null && ri.longitude != null && !ri.latitude.equals("") && !ri.longitude.equals("")) {
                 size++;
+                points.add(Point.fromLngLat(Double.valueOf(ri.longitude), Double.valueOf(ri.latitude)));
             }
         }
+
+
 
         ArrayList<routeListItem> mTitles = new ArrayList<routeListItem>(size);
 
@@ -533,39 +544,6 @@ public class GuideActivity extends LocalizationActivity implements
 
         slideToBottom(findViewById(R.id.pager), 100);
 
-        /*
-        View.OnClickListener showRater = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-                LayoutInflater inflater = getLayoutInflater();
-                View v = inflater.inflate(R.layout.dialog_rating, null);
-                dialogBuilder.setView(v);
-                dialogBuilder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                       dialog.dismiss();
-                    }
-                });
-                dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-
-                AlertDialog alertDialog = dialogBuilder.create();
-                alertDialog.show();
-            }
-        };
-
-        findViewById(R.id.star1).setOnClickListener(showRater);
-        findViewById(R.id.star2).setOnClickListener(showRater);
-        findViewById(R.id.star3).setOnClickListener(showRater);
-        findViewById(R.id.star4).setOnClickListener(showRater);
-        findViewById(R.id.star5).setOnClickListener(showRater);
-        */
-
         View.OnClickListener showQuiz = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -714,6 +692,8 @@ public class GuideActivity extends LocalizationActivity implements
             }
         }
 
+
+
     }
 
     public void speakRoute(PModel pm) {
@@ -777,6 +757,9 @@ public class GuideActivity extends LocalizationActivity implements
         current.setLongitude(longitudeValue);
         current.setTime(new Date().getTime());
 
+
+
+
         float min = 11111111;
         String log = "";
 
@@ -802,6 +785,10 @@ public class GuideActivity extends LocalizationActivity implements
             }
 
             if(dist < tour.radius) {
+
+                fetchRoute(Point.fromLngLat(Double.valueOf(currentRoute.latitude), Double.valueOf(currentRoute.longitude)),
+                        Point.fromLngLat(Double.valueOf(pm.route.latitude), Double.valueOf(pm.route.longitude)));
+
                 currentRoute = pm.route;
                 //currentQuiz = pm.route.quiz;
                 prepareQuiz();
@@ -819,27 +806,7 @@ public class GuideActivity extends LocalizationActivity implements
                     pm.marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
 
 
-                Point origin = Point.fromLngLat(-77.03613, 38.90992);
-                Point destination = Point.fromLngLat(-77.0365, 38.8977);
 
-
-
-                NavigationRoute.builder(this)
-                        .accessToken(Mapbox.getAccessToken())
-                        .origin(origin)
-                        .destination(destination)
-                        .build()
-                        .getRoute(new SortedList.Callback<DirectionsResponse>() {
-                            @Override
-                            public void onResponse(Call<DirectionsResponse> call, Response<DirectionsResponse> response) {
-
-                            }
-
-                            @Override
-                            public void onFailure(Call<DirectionsResponse> call, Throwable t) {
-
-                            }
-                        });
 
             };
             pos++;
@@ -1053,6 +1020,15 @@ public class GuideActivity extends LocalizationActivity implements
 
         mDrawerList.setItemChecked(position, true);
 
+        if(currentRoute != null) {
+            fetchRoute(Point.fromLngLat(Double.valueOf(currentRoute.latitude), Double.valueOf(currentRoute.longitude)),
+                    Point.fromLngLat(Double.valueOf(markers.get(position).route.latitude), Double.valueOf(markers.get(position).route.longitude)));
+        } else {
+            if(mLastLocation != null)
+                fetchRoute(Point.fromLngLat(mLastLocation.getLatitude(), mLastLocation.getLongitude()),
+                    Point.fromLngLat(Double.valueOf(markers.get(position).route.latitude), Double.valueOf(markers.get(position).route.longitude)));
+        }
+
         currentRoute = markers.get(position).route;
         currentPM = markers.get(position);
 
@@ -1194,90 +1170,17 @@ public class GuideActivity extends LocalizationActivity implements
         }
     }
 
-    /*
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        Log.d(TAG, "Connection method has been called");
-        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest);
-        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(mGoogleApiClient, builder.build());
-        result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-            @Override
-            public void onResult(@NonNull LocationSettingsResult result) {
-                final Status status = result.getStatus();
-                switch (status.getStatusCode()) {
-                    case LocationSettingsStatusCodes.SUCCESS:
-                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-                                && ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                            mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-                            if (mLastLocation != null) {
-                                latitudeValue = mLastLocation.getLatitude();
-                                longitudeValue = mLastLocation.getLongitude();
-                                refreshMap(mMap);
-                                //markStartingLocationOnMap(mMap, new LatLng(latitudeValue, longitudeValue));
-
-                                fillMap();
-                                //fetchRoutes();
-
-                            }
-
-                }
-                        break;
-                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-                        break;
-                }
-            }
-        });
-    }
-    */
-
-    /*
-    @Override
-    public void onConnectionSuspended(int i) {}
-    */
-
-
     private void refreshMap(GoogleMap mapInstance){
         if(mapInstance != null)
             mapInstance.clear();
     }
-
-    /*
-    protected void createLocationRequest() {
-
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setInterval(6000);
-        mLocationRequest.setFastestInterval(4000);
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        LocationCallback locCB = new LocationCallback() {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                Location loc = locationResult.getLastLocation();
-                if(loc.getAccuracy() < 50) {
-                    latitudeValue = loc.getLatitude();
-                    longitudeValue = loc.getLongitude();
-                }
-
-                fillMap();
-                fetchRoutes();
-            }
-        };
-
-        if(addedlocationlistener) {
-            //mFusedLocationClient.removeLocationUpdates(locCB);
-        } else {
-           addedlocationlistener = true;
-        }
-
-        mFusedLocationClient.requestLocationUpdates(mLocationRequest, locCB, null);
-    }
-    */
 
     @Override
     public void onResume() {
         RouteService.setIListener(this);
         Log.e(TAG, "onresume");
         super.onResume();
+        navigationView.onResume();
         restoreTour();
         fixNotification(tour.title);
         fillMap();
@@ -1285,9 +1188,16 @@ public class GuideActivity extends LocalizationActivity implements
     }
 
     @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        navigationView.onLowMemory();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         saveTour();
+        navigationView.onPause();
     }
 
     @Override
@@ -1295,6 +1205,7 @@ public class GuideActivity extends LocalizationActivity implements
         Log.e(TAG, "onstart");
         //mGoogleApiClient.connect();
         RouteService.setIListener(this);
+        navigationView.onStart();
         super.onStart();
     }
 
@@ -1304,6 +1215,7 @@ public class GuideActivity extends LocalizationActivity implements
         //mGoogleApiClient.disconnect();
         //RouteService.setIListener(null);
         super.onStop();
+        navigationView.onStop();
     }
 
     @Override
@@ -1414,7 +1326,9 @@ public class GuideActivity extends LocalizationActivity implements
     @Override
     public void onDestroy() {
         Log.e(TAG, "ondestroy");
+
         super.onDestroy();
+        navigationView.onDestroy();
     }
 
     public void removeNotification() {
@@ -1456,6 +1370,120 @@ public class GuideActivity extends LocalizationActivity implements
         notificationManager.notify(9999, notificationBuilder.build());
 
     }
+
+
+    /*-----------------------------------------------------*/
+
+
+    @Override
+    public void onNavigationReady(boolean ready) {
+        fetchRoute(points.remove(0), points.remove(0));
+    }
+
+    @Override
+    public void onCancelNavigation() {
+// Navigation canceled, finish the activity
+        finish();
+    }
+
+    @Override
+    public void onNavigationFinished() {
+// Intentionally empty
+    }
+
+    @Override
+    public void onNavigationRunning() {
+// Intentionally empty
+    }
+
+    @Override
+    public boolean allowRerouteFrom(Point offRoutePoint) {
+        return true;
+    }
+
+    @Override
+    public void onOffRoute(Point offRoutePoint) {
+
+    }
+
+    @Override
+    public void onRerouteAlong(DirectionsRoute directionsRoute) {
+
+    }
+
+    @Override
+    public void onFailedReroute(String errorMessage) {
+
+    }
+
+    @Override
+    public void onArrival() {
+        if (!dropoffDialogShown && !points.isEmpty()) {
+            showDropoffDialog();
+            dropoffDialogShown = true; // Accounts for multiple arrival events
+        }
+    }
+
+    @Override
+    public void onProgressChange(Location location, RouteProgress routeProgress) {
+        lastKnownLocation = location;
+    }
+
+    private void startNavigation(DirectionsRoute directionsRoute) {
+        NavigationViewOptions navigationViewOptions = setupOptions(directionsRoute);
+        navigationView.startNavigation(navigationViewOptions);
+    }
+
+    private void showDropoffDialog() {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setMessage(getString(R.string.dropoff_dialog_text));
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.dropoff_dialog_positive_text),
+                (dialogInterface, in) -> fetchRoute(getLastKnownLocation(), points.remove(0)));
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.dropoff_dialog_negative_text),
+                (dialogInterface, in) -> {
+// Do nothing
+                });
+
+        alertDialog.show();
+    }
+
+    private void fetchRoute(Point origin, Point destination) {
+        NavigationRoute.builder(this)
+                .accessToken(Mapbox.getAccessToken())
+                .origin(origin)
+                .destination(destination)
+                .alternatives(true)
+                .build()
+                .getRoute(new Callback() {
+
+                    @Override
+                    public void onResponse(Call call, Response response) {
+                        startNavigation( ((DirectionsResponse)response.body()).routes().get(0));
+                    }
+
+                    @Override
+                    public void onFailure(Call call, Throwable t) {
+
+                    }
+                });
+    }
+
+    private NavigationViewOptions setupOptions(DirectionsRoute directionsRoute) {
+        dropoffDialogShown = false;
+
+        NavigationViewOptions.Builder options = NavigationViewOptions.builder();
+        options.directionsRoute(directionsRoute)
+                .navigationListener(this)
+                .progressChangeListener(this)
+                .routeListener(this)
+                .shouldSimulateRoute(true);
+        return options.build();
+    }
+
+    private Point getLastKnownLocation() {
+        return Point.fromLngLat(lastKnownLocation.getLongitude(), lastKnownLocation.getLatitude());
+    }
+
 
 }
 
