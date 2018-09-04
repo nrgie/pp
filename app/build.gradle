@@ -37,12 +37,12 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:customtabs:27.1.1'
-    implementation 'com.android.support:leanback-v17:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:support-v4:27.1.0'
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
+    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:customtabs:27.1.0'
+    implementation 'com.android.support:leanback-v17:27.1.0'
 
 
     implementation 'com.google.firebase:firebase-messaging:15.0.2'
@@ -86,6 +86,8 @@ dependencies {
     implementation ('com.mapbox.mapboxsdk:mapbox-android-navigation-ui:0.18.0') {
         transitive = true
     }
+
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
 
 }
 

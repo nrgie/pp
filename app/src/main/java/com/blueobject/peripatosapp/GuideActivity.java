@@ -1461,8 +1461,7 @@ public class GuideActivity extends LocalizationActivity implements
         options.directionsRoute(directionsRoute)
                 .navigationListener(this)
                 .progressChangeListener(this)
-                .routeListener(this)
-                .shouldSimulateRoute(false);
+                .routeListener(this);
         return options.build();
     }
 
