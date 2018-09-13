@@ -98,6 +98,7 @@ import com.mapbox.services.android.navigation.v5.navigation.NavigationRoute;
 import com.mapbox.services.android.navigation.v5.routeprogress.ProgressChangeListener;
 import com.mapbox.services.android.navigation.v5.routeprogress.RouteProgress;
 import com.ramotion.fluidslider.FluidSlider;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 
 import org.apache.http.NameValuePair;
@@ -316,7 +317,6 @@ public class GuideActivity extends LocalizationActivity implements
             }
         }
 
-
         int size=0;
         for(Tours.RouteItem ri : routes) {
             if(ri.latitude != null && ri.longitude != null && !ri.latitude.equals("") && !ri.longitude.equals("")) {
@@ -342,6 +342,8 @@ public class GuideActivity extends LocalizationActivity implements
                 i++;
             }
         }
+
+
 
         Log.e("APP", ""+routes.size());
 
@@ -527,6 +529,10 @@ public class GuideActivity extends LocalizationActivity implements
         findViewById(R.id.togglelist).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                com.sothree.slidinguppanel.SlidingUpPanelLayout root = findViewById(R.id.root);
+                root.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
+
                 slideToTop(findViewById(R.id.pager), 500);
             }
         });
