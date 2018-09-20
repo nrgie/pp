@@ -5,7 +5,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.blueobject.peripatosapp"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 21
         versionCode 6
         versionName "6.0"
