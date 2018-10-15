@@ -146,16 +146,23 @@ public class TextToSpechConvertor implements IConvertor {
         textToSpeech.setPitch(1f);
         textToSpeech.setSpeechRate(App.speechRate);
 
+        try {
+            if (App.musicPlayer != null && App.musicPlayer.player != null && App.musicPlayer.player.isPlaying())
+                App.musicPlayer.player.pause();
+        } catch(IllegalStateException e){
+
+        }
+
         AudioManager audioManager = (AudioManager) App.appContext.getSystemService(Context.AUDIO_SERVICE);
-        if(oldmusicvalue == 0)
-            oldmusicvalue = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        //if(oldmusicvalue == 0)
+        //    oldmusicvalue = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
 
         //Log.e("OLDVOLUME", ""+oldmusicvalue);
 
         // 15 körül van max ?
 
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 1, 0);
-        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 7, 0);
+        //audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 1, 0);
+        //audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 7, 0);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ttsGreater21(message);
@@ -203,8 +210,8 @@ public class TextToSpechConvertor implements IConvertor {
         String utteranceId = this.hashCode() + "";
 
         Bundle map = new Bundle();
-        map.putInt(TextToSpeech.Engine.KEY_PARAM_STREAM, AudioManager.STREAM_NOTIFICATION);
-        map.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, 1);
+        //map.putInt(TextToSpeech.Engine.KEY_PARAM_STREAM, AudioManager.STREAM_NOTIFICATION);
+        //map.putFloat(TextToSpeech.Engine.KEY_PARAM_VOLUME, 1);
 
         textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, map, utteranceId);
 
@@ -219,9 +226,12 @@ public class TextToSpechConvertor implements IConvertor {
 
             @Override
             public void onDone(String utteranceId) {
-                AudioManager audioManager = (AudioManager) App.appContext.getSystemService(Context.AUDIO_SERVICE);
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldmusicvalue, 0);
-                oldmusicvalue = 0;
+                //AudioManager audioManager = (AudioManager) App.appContext.getSystemService(Context.AUDIO_SERVICE);
+                //audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldmusicvalue, 0);
+                try {
+                    if(App.musicPlayer != null && !App.musicPlayer.player.isPlaying())
+                        App.musicPlayer.player.start();
+                } catch(IllegalStateException e) {}
             }
         });
 

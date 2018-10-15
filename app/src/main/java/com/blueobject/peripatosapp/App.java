@@ -23,6 +23,7 @@ import com.blueobject.peripatosapp.models.UserModel;
 
 import com.blueobject.peripatosapp.models.Word;
 import com.blueobject.peripatosapp.models.answerItem;
+import com.blueobject.peripatosapp.service.BackgroundMusicPlayer;
 import com.blueobject.peripatosapp.translation_engine.translators.TextToSpechConvertor;
 import com.facebook.FacebookSdk;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -126,6 +127,9 @@ public class App extends MultiDexApplication {
 
     private static final String CANARO_EXTRA_BOLD_PATH = "fonts/canaro_extra_bold.otf";
     public static Typeface canaroExtraBold;
+
+
+    public static BackgroundMusicPlayer musicPlayer;
 
     private void initTypeface() {
         canaroExtraBold = Typeface.createFromAsset(getAssets(), CANARO_EXTRA_BOLD_PATH);

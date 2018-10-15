@@ -14,15 +14,20 @@ import com.blueobject.peripatosapp.App;
 public class BackgroundMusicPlayer extends Service {
 
     private static final String TAG = null;
-    MediaPlayer player;
+    public static MediaPlayer player;
 
     public IBinder onBind(Intent i) {
         return null;
     }
 
+
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        App.musicPlayer = this;
+
         player = new MediaPlayer();
         try {
             player.setDataSource(App.currentMusic);
